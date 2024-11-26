@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
+    >
 
     <!-- Background overlay for touch panel -->
     <View
@@ -23,7 +24,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="00:00" />
+        android:text="00:00"
+        android:visibility="gone" /> <!-- Initially hidden -->
 
     <!-- Video duration -->
     <TextView
@@ -35,7 +37,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:layout_alignParentEnd="true"
-        android:text="00:00" />
+        android:text="00:00"
+        android:visibility="gone" /> <!-- Initially hidden -->
 
     <!-- Center Play/Pause Button -->
     <ImageButton
@@ -46,7 +49,8 @@
         android:background="@null"
         android:contentDescription="Play/Pause"
         android:src="@drawable/baseline_play_arrow_24"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        android:visibility="gone" /> <!-- Initially hidden -->
 
     <!-- Fullscreen toggle button -->
     <ImageButton
@@ -60,7 +64,8 @@
         android:background="@null"
         android:contentDescription="Fullscreen"
         android:src="@drawable/baseline_fullscreen_24"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        android:visibility="gone" /> <!-- Initially hidden -->
 
     <!-- Progress Bar -->
     <SeekBar
@@ -70,6 +75,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="56dp" />
+        android:layout_marginBottom="56dp"
+        android:visibility="gone" /> <!-- Initially hidden -->
 
 </RelativeLayout>
+

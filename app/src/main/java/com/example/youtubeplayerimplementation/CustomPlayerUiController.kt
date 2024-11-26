@@ -2,6 +2,8 @@ package com.example.youtubeplayerimplementation
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -37,7 +39,6 @@ internal class CustomPlayerUiController(
 
     private fun initViews(playerUi: View) {
         panel = playerUi.findViewById(R.id.panel)
-//        progressbar = playerUi.findViewById(R.id.progressbar)
         videoCurrentTimeTextView = playerUi.findViewById(R.id.video_current_time)
         videoDurationTextView = playerUi.findViewById(R.id.video_duration)
         videoSeekBar = playerUi.findViewById(R.id.video_seekbar)
@@ -45,17 +46,46 @@ internal class CustomPlayerUiController(
         val playPauseButton = playerUi.findViewById<ImageButton>(R.id.play_pause_button)
         val enterExitFullscreenButton = playerUi.findViewById<ImageButton>(R.id.enter_exit_fullscreen_button)
 
+        // Initially hide all controls
+        playPauseButton.visibility = View.GONE
+        enterExitFullscreenButton.visibility = View.GONE
+        videoSeekBar?.visibility = View.GONE
+        videoCurrentTimeTextView?.visibility = View.GONE
+        videoDurationTextView?.visibility = View.GONE
+
+        // Toggle visibility of all controls on panel click
+        panel?.setOnClickListener {
+            // Show all controls
+            playPauseButton.visibility = View.VISIBLE
+            enterExitFullscreenButton.visibility = View.VISIBLE
+            videoSeekBar?.visibility = View.VISIBLE
+            videoCurrentTimeTextView?.visibility = View.VISIBLE
+            videoDurationTextView?.visibility = View.VISIBLE
+
+            // Use Handler to hide all controls after 5 seconds
+            Handler(Looper.getMainLooper()).postDelayed({
+                playPauseButton.visibility = View.GONE
+                enterExitFullscreenButton.visibility = View.GONE
+                videoSeekBar?.visibility = View.GONE
+                videoCurrentTimeTextView?.visibility = View.GONE
+                videoDurationTextView?.visibility = View.GONE
+            }, 5000)  // 5000ms = 5 seconds
+        }
+
+        // Play/Pause button click behavior
         playPauseButton.setOnClickListener {
             if (playerTracker.state == PlayerConstants.PlayerState.PLAYING) youTubePlayer.pause()
             else youTubePlayer.play()
         }
 
+        // Fullscreen button click behavior
         enterExitFullscreenButton.setOnClickListener {
             if (fullscreen) youTubePlayerView.wrapContent()
             else youTubePlayerView.matchParent()
             fullscreen = !fullscreen
         }
 
+        // Seekbar change listener
         videoSeekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
@@ -74,6 +104,9 @@ internal class CustomPlayerUiController(
             }
         })
     }
+
+
+
 
     override fun onReady(youTubePlayer: YouTubePlayer) {
 //        progressbar?.visibility = View.GONE
